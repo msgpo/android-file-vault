@@ -33,6 +33,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.*
 import android.hardware.camera2.*
+import android.media.Image
 import android.media.ImageReader
 import android.os.Bundle
 import android.os.Handler
@@ -44,7 +45,7 @@ import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
-import com.vandenbreemen.mobilesecurestorage.log.SystemLog
+import com.vandenbreemen.mobilesecurestorage.message.MSSRuntime
 import com.vandenbreemen.secretcamera.R
 import com.vandenbreemen.secretcamera.external.*
 import java.util.Arrays
@@ -52,6 +53,13 @@ import java.util.Collections
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+
+/**
+ * Callback for photos taken etc
+ */
+interface CameraListener {
+    fun onSnapPhoto(image: Image)
+}
 
 class Camera2BasicFragment : Fragment(), View.OnClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
@@ -101,6 +109,8 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
      */
     private lateinit var previewSize: Size
 
+    private lateinit var listener: CameraListener
+
     /**
      * [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.
      */
@@ -146,7 +156,8 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
      */
     private val onImageAvailableListener = ImageReader.OnImageAvailableListener {
         //backgroundHandler?.post(ImageSaver(it.acquireNextImage(), file))
-        SystemLog.get().debug("Took a picture! - ${it.acquireNextImage()}")
+        //SystemLog.get().debug("Took a picture! - ${it.acquireNextImage()}")
+        this.listener.onSnapPhoto(it.acquireNextImage())
     }
 
     /**
@@ -239,6 +250,14 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
             process(result)
         }
 
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context !is CameraListener) {
+            throw MSSRuntime("Expected $context to be a ${CameraListener::class.java.simpleName}")
+        }
+        this.listener = context
     }
 
     override fun onCreateView(inflater: LayoutInflater,

@@ -2,6 +2,8 @@ package com.vandenbreemen.secretcamera.app
 
 import android.app.Activity
 import android.app.Application
+import com.vandenbreemen.mobilesecurestorage.log.AndroidSystemLog
+import com.vandenbreemen.mobilesecurestorage.log.SystemLog
 import com.vandenbreemen.secretcamera.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -26,6 +28,8 @@ class SecureCameraApp:Application(), HasActivityInjector {
                 .application(this)
                 .build()
                 .inject(this)
+
+        SystemLog.setGlobalSystemLog(AndroidSystemLog())
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

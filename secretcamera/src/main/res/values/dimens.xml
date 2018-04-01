@@ -3,4 +3,10 @@
     <item name="bias_horiz_start" format="float" type="dimen">0.25</item>
     <item name="bias_vertical_bottom" format="float" type="dimen">0.96</item>
     <item name="bias_horiz_end" format="float" type="dimen">0.75</item>
+
+    <!--Dimensions borrowed from the Android Camera2 Project found at
+    https://github.com/googlesamples/android-Camera2Basic/blob/master/kotlinApp/Application/src/main/res/values/dimens.xml
+    and under the terms of the Apache 2 license -->
+    <dimen name="frame_height">112dp</dimen>
+    <dimen name="image_button_padding">20dp</dimen>
 </resources>

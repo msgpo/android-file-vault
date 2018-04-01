@@ -86,6 +86,10 @@ class MainActivity : AppCompatActivity(), SFSMenuContract.SFSMainMenuView {
         mainMenuPresenter!!.takeNote()
     }
 
+    fun onTakePicture(view: View) {
+        mainMenuPresenter!!.takePicture()
+    }
+
     override fun gotoNotesList(credentials:SFSCredentials, strings:ArrayList<String>) {
 
         val workflow = StringSelectorWorkflow(NoteDetailsActivity::class.java, strings, credentials)
@@ -109,6 +113,9 @@ class MainActivity : AppCompatActivity(), SFSMenuContract.SFSMainMenuView {
     }
 
     override fun gotoTakePicture(credentials: SFSCredentials) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(this, TakePictureActivity::class.java)
+        intent.putExtra(SFSCredentials.PARM_CREDENTIALS, credentials)
+        startActivity(intent)
+        finish()
     }
 }

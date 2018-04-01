@@ -7,4 +7,6 @@
     <string name="default_select_item_title">Please select an Item</string>
     <string name="specify_title">Please choose a title</string>
     <string name="edit">Edit</string>
+    <string name="take_shot">Shoot</string>
+    <string name="description_info">Description Info</string>
 </resources>

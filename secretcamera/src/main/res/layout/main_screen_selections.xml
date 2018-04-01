@@ -20,6 +20,7 @@
 
         <Button
             android:id="@+id/takePicture"
+            android:onClick="onTakePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
